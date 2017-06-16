@@ -18,7 +18,7 @@ public class TextOutTest {
     String input = "<p>Yet agreeably ably more hot before about goodness save oppressive far.<\\/p>\\r<p>Aardvark or snorted considering more one crookedly or much tiger panther much jay before much in echidna fumbling due dire.<\\/p>\\r<p>The a swept gosh amidst.<\\/p>\\r";
 
     @Test
-    public void shouldParse() throws Exception {
+    public void shouldCreate() throws Exception {
         Pattern pattern = Pattern.compile("<p>(.+?)<\\\\/p>(\r)?");
 
         Matcher matcher = pattern.matcher(input);

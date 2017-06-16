@@ -30,9 +30,9 @@ class DefaultRandomTextService implements RandomTextService {
     @Override
     public Observable<TextResponse> compute(int start, int end, int min, int max) {
         return Observable.range(start, end)
-                .flatMap(integer -> Observable.just(integer)
+                .flatMap(id -> Observable.just(id)
                         .observeOn(Schedulers.computation())
-                        .flatMap(integer1 -> service.getText(integer1, min, max)
+                        .flatMap(pid -> service.getText(pid, min, max)
                                 .map(value -> TextOut.create(value.getTextOut()))))
                 .toList()
                 .map(textOuts -> {
@@ -43,14 +43,13 @@ class DefaultRandomTextService implements RandomTextService {
                     TextResponse.Builder builder = new TextResponse.Builder()
                             .withAvgParagraphSize(averageParagraphSize(sections));
 
-                    uniqueWord(sections).ifPresent(builder::withFreqWord);
+                    mostFrequentWord(sections).ifPresent(builder::withFreqWord);
 
                     return builder.build();
                 });
-
     }
 
-    private Optional<String> uniqueWord(List<Section> sections) {
+    private Optional<String> mostFrequentWord(List<Section> sections) {
         Map<String, Long> map = sections.parallelStream()
                 .flatMap(c -> c.splitByWord().entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingLong(Map.Entry::getValue)));
@@ -61,7 +60,6 @@ class DefaultRandomTextService implements RandomTextService {
                 .limit(1)
                 .map(Map.Entry::getKey)
                 .findFirst();
-
     }
 
     private int averageParagraphSize(List<Section> sections) {

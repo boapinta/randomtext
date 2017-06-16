@@ -17,7 +17,7 @@ public class Section {
     private final int size;
 
     static Section create(String value) {
-        Assert.notNull(value);
+        Assert.notNull(value, "A value must not be null");
 
         return new Section(value, value.length());
     }

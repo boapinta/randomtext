@@ -1,5 +1,7 @@
 package com.github.randomtext.text;
 
+import org.springframework.util.Assert;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,6 +17,8 @@ public class TextOut {
     private final List<Section> sections;
 
     static TextOut create(String input) {
+        Assert.notNull(input, "A value must not be null");
+
         Matcher matcher = PATTERN.matcher(input);
 
         List<Section> sections = new ArrayList<>();
