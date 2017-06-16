@@ -15,9 +15,9 @@ import java.util.Objects;
 class TextResponse {
 
     private String freqWord;
-    private int avgParagraphSize;
-    private double avgParagraphProcessingTime;
-    private double totalProcessingTime;
+    private Integer avgParagraphSize;
+    private Double avgParagraphProcessingTime;
+    private Double totalProcessingTime;
 
     private TextResponse(Builder builder) {
         freqWord = builder.freqWord;
@@ -30,15 +30,15 @@ class TextResponse {
         return freqWord;
     }
 
-    public int getAvgParagraphSize() {
+    public Integer getAvgParagraphSize() {
         return avgParagraphSize;
     }
 
-    public double getAvgParagraphProcessingTime() {
+    public Double getAvgParagraphProcessingTime() {
         return avgParagraphProcessingTime;
     }
 
-    public double getTotalProcessingTime() {
+    public Double getTotalProcessingTime() {
         return totalProcessingTime;
     }
 
@@ -47,10 +47,10 @@ class TextResponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TextResponse that = (TextResponse) o;
-        return avgParagraphSize == that.avgParagraphSize &&
-                Double.compare(that.avgParagraphProcessingTime, avgParagraphProcessingTime) == 0 &&
-                Double.compare(that.totalProcessingTime, totalProcessingTime) == 0 &&
-                Objects.equals(freqWord, that.freqWord);
+        return Objects.equals(freqWord, that.freqWord) &&
+                Objects.equals(avgParagraphSize, that.avgParagraphSize) &&
+                Objects.equals(avgParagraphProcessingTime, that.avgParagraphProcessingTime) &&
+                Objects.equals(totalProcessingTime, that.totalProcessingTime);
     }
 
     @Override
@@ -73,26 +73,26 @@ class TextResponse {
     static class Builder {
 
         private String freqWord;
-        private int avgParagraphSize;
-        private double avgParagraphProcessingTime;
-        private double totalProcessingTime;
+        private Integer avgParagraphSize;
+        private Double avgParagraphProcessingTime;
+        private Double totalProcessingTime;
 
         public Builder withFreqWord(String freqWord) {
             this.freqWord = freqWord;
             return this;
         }
 
-        public Builder withAvgParagraphSize(int avgParagraphSize) {
+        public Builder withAvgParagraphSize(Integer avgParagraphSize) {
             this.avgParagraphSize = avgParagraphSize;
             return this;
         }
 
-        public Builder withAvgParagraphProcessingTime(double avgParagraphProcessingTime) {
+        public Builder withAvgParagraphProcessingTime(Double avgParagraphProcessingTime) {
             this.avgParagraphProcessingTime = avgParagraphProcessingTime;
             return this;
         }
 
-        public Builder withTotalProcessingTime(double totalProcessingTime) {
+        public Builder withTotalProcessingTime(Double totalProcessingTime) {
             this.totalProcessingTime = totalProcessingTime;
             return this;
         }

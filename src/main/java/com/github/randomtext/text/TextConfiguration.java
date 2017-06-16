@@ -22,22 +22,19 @@ public class TextConfiguration {
     @Autowired
     private ObjectMapper mapper;
 
+
     @Bean
-    public Retrofit retrofit() {
+    public APIService randomTextService() {
         return new Retrofit.Builder()
                 .baseUrl(settings.getBaseUrl())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .build();
+                .build()
+                .create(APIService.class);
     }
 
     @Bean
-    public RandomTextService randomTextService() {
-        return retrofit().create(RandomTextService.class);
-    }
-
-    @Bean
-    public RemoteService remoteService() {
-        return new DefaultRemoteService(randomTextService());
+    public RandomTextService remoteService() {
+        return new DefaultRandomTextService(randomTextService());
     }
 }

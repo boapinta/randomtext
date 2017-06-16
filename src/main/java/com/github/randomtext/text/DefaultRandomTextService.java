@@ -1,0 +1,92 @@
+package com.github.randomtext.text;
+
+import rx.Observable;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+/**
+ * Created by alexey on 6/15/17.
+ */
+class DefaultRandomTextService implements RandomTextService {
+
+    private final APIService service;
+
+
+    // most frequent word
+    // the average paragraph size
+    // the average paragraph processing time
+    // total processing time
+
+
+    DefaultRandomTextService(APIService service) {
+        this.service = service;
+    }
+
+    @Override
+    public Observable<TextResponse> compute(int start, int end, int min, int max) {
+        return Observable.range(start, end)
+                .flatMap(new Func1<Integer, Observable<TextOut>>() {
+                    @Override
+                    public Observable<TextOut> call(Integer integer) {
+                        return Observable.just(integer)
+                                .observeOn(Schedulers.computation())
+                                .flatMap(new Func1<Integer, Observable<TextOut>>() {
+                                    @Override
+                                    public Observable<TextOut> call(Integer integer) {
+                                        return service.getText(integer, min, max)
+                                                .map(new Func1<RandomTextResponse, TextOut>() {
+                                                    @Override
+                                                    public TextOut call(RandomTextResponse value) {
+                                                        return TextOut.create(value.getTextOut());
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                })
+                .toList()
+                .map(new Func1<List<TextOut>, TextResponse>() {
+                    @Override
+                    public TextResponse call(List<TextOut> textOuts) {
+                        List<Section> sections = textOuts.stream()
+                                .flatMap(c -> c.getSections().stream())
+                                .collect(Collectors.toList());
+
+                        TextResponse.Builder builder = new TextResponse.Builder()
+                                .withAvgParagraphSize(averageParagraphSize(sections));
+
+                        uniqueWord(sections).ifPresent(builder::withFreqWord);
+
+                        return builder.build();
+                    }
+                });
+
+    }
+
+    private Optional<String> uniqueWord(List<Section> sections) {
+        Map<String, Long> map = sections.parallelStream()
+                .flatMap(c -> c.words().parallelStream())
+                .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+        return map
+                .entrySet().stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .limit(1)
+                .map(Map.Entry::getKey)
+                .findFirst();
+
+    }
+
+    private int averageParagraphSize(List<Section> sections) {
+        return sections.parallelStream()
+                .mapToInt(Section::getSize)
+                .reduce((a, b) -> a + b)
+                .orElseThrow(IllegalArgumentException::new) / sections.size();
+    }
+
+}
