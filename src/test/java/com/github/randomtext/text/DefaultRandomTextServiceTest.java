@@ -6,6 +6,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import rx.Observable;
+import rx.observers.TestSubscriber;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
@@ -21,13 +29,54 @@ public class DefaultRandomTextServiceTest {
 
     @Before
     public void setUp() throws Exception {
+        given(service.getText(1, 1, 25))
+                .willReturn(Observable.just(randomTextResponseFooBar()));
 
+        given(service.getText(2, 1, 25))
+                .willReturn(Observable.just(randomTextResponseFoo()));
     }
 
     @Test
     public void shouldCompute() throws Exception {
+        TestSubscriber<TextResponse> testSubscriber = TestSubscriber.create();
 
-        victim.compute(0, 0, 0, 0);
+        victim.compute(1, 2, 1, 25)
+                .subscribe(testSubscriber);
+
+        testSubscriber.assertNoErrors();
+
+        List<TextResponse> result = testSubscriber.getOnNextEvents();
+        assertThat(result).hasSize(1);
+
+        TextResponse next = result.iterator().next();
+        assertThat(next.getFreqWord()).isEqualTo("Foo");
+        assertThat(next.getAvgParagraphSize()).isEqualTo(("Foo.".length() + "Foo Bar.".length())/2);
+        assertThat(next.getAvgParagraphProcessingTime()).isNotNull();
+
+        assertThat(next.getTotalProcessingTime()).isNull();
+
+        verify(service).getText(1, 1, 25);
+
     }
+
+
+    private RandomTextResponse randomTextResponseFooBar() {
+        return new RandomTextResponse.Builder()
+                .withAmount(1)
+                .withNumber(1)
+                .withNumberMax(25)
+                .withTextOut("<p>Foo Bar.</p>\r")
+                .build();
+    }
+
+    private RandomTextResponse randomTextResponseFoo() {
+        return new RandomTextResponse.Builder()
+                .withAmount(1)
+                .withNumber(1)
+                .withNumberMax(25)
+                .withTextOut("<p>Foo .</p>\r")
+                .build();
+    }
+
 
 }

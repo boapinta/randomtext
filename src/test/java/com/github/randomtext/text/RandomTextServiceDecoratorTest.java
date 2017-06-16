@@ -13,8 +13,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
@@ -38,8 +38,8 @@ public class RandomTextServiceDecoratorTest {
     @Before
     public void setUp() throws Exception {
 
-        when(randomTextService.compute(start, end, min, max))
-                .thenReturn(Observable.just(textResponse = new TextResponse.Builder()
+        given(randomTextService.compute(start, end, min, max))
+                .willReturn(Observable.just(textResponse = new TextResponse.Builder()
                         .withFreqWord("foo")
                         .withAvgParagraphSize(1)
                         .withAvgParagraphProcessingTime(2.0)
@@ -49,18 +49,18 @@ public class RandomTextServiceDecoratorTest {
 
     @Test
     public void shouldCompute() throws Exception {
-        TestSubscriber<TextResponse> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<TextResponse> testSubscriber =  TestSubscriber.create();
 
         victim.compute(start, end, min, max)
                 .subscribe(testSubscriber);
 
         testSubscriber.assertNoErrors();
 
-        List<TextResponse> list = testSubscriber.getOnNextEvents();
+        List<TextResponse> result = testSubscriber.getOnNextEvents();
 
-        assertThat(list).hasSize(1);
+        assertThat(result).hasSize(1);
 
-        TextResponse next = list.iterator().next();
+        TextResponse next = result.iterator().next();
 
         assertThat(next).isNotSameAs(textResponse);
 

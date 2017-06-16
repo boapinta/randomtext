@@ -12,12 +12,12 @@ import java.util.regex.Pattern;
  * Created by Alexey Koptenkov on 16/06/2017.
  */
 public class TextOut {
-    private static final Pattern PATTERN = Pattern.compile("<p>(.+?)<\\/p>(\r)?");
+    private static final Pattern PATTERN = Pattern.compile("<p>(.+?)<\\/p>(\\r)?");
 
     private final List<Section> sections;
 
     static TextOut create(String input) {
-        Assert.notNull(input, "A value must not be null");
+        Assert.hasText(input, "A value must not be blank");
 
         Matcher matcher = PATTERN.matcher(input);
 
@@ -27,7 +27,9 @@ public class TextOut {
             sections.add(Section.create(matcher.group(1)));
         }
 
-        return new TextOut(sections);
+        Assert.notEmpty(sections, "A collection must not be empty: it must contain at least 1 element");
+
+        return new TextOut(sections);  // todo check sections size must be larger than 0
     }
 
     private TextOut(List<Section> sections) {

@@ -1,6 +1,7 @@
 package com.github.randomtext.text;
 
 import rx.Observable;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import java.util.Comparator;
