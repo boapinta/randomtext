@@ -1,13 +1,13 @@
 package com.github.randomtext.text;
 
 import rx.Observable;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
@@ -16,13 +16,6 @@ import java.util.stream.Collectors;
 class DefaultRandomTextService implements RandomTextService {
 
     private final APIService service;
-
-
-    // most frequent word
-    // the average paragraph size
-    // the average paragraph processing time
-    // total processing time
-
 
     DefaultRandomTextService(APIService service) {
         this.service = service;
@@ -41,18 +34,20 @@ class DefaultRandomTextService implements RandomTextService {
                             .flatMap(c -> c.getSections().stream())
                             .collect(Collectors.toList());
 
+                    AtomicLong counter = new AtomicLong(0);
+
                     TextResponse.Builder builder = new TextResponse.Builder()
                             .withAvgParagraphSize(averageParagraphSize(sections));
 
-                    mostFrequentWord(sections).ifPresent(builder::withFreqWord);
+                    mostFrequentWord(sections, counter).ifPresent(builder::withFreqWord);
 
-                    return builder.build();
+                    return builder.withAvgParagraphProcessingTime(counter.doubleValue() / 1000 / sections.size()).build();
                 });
     }
 
-    private Optional<String> mostFrequentWord(List<Section> sections) {
+    private Optional<String> mostFrequentWord(List<Section> sections, AtomicLong counter) {
         Map<String, Long> map = sections.parallelStream()
-                .flatMap(c -> c.splitByWord().entrySet().stream())
+                .flatMap(c -> c.splitByWord(counter).entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingLong(Map.Entry::getValue)));
 
         return map
