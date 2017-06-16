@@ -17,7 +17,7 @@ class TextResponse {
     private String freqWord;
     private Integer avgParagraphSize;
     private Double avgParagraphProcessingTime;
-    private Long totalProcessingTime;
+    private Double totalProcessingTime;
 
     private TextResponse(Builder builder) {
         freqWord = builder.freqWord;
@@ -38,7 +38,7 @@ class TextResponse {
         return avgParagraphProcessingTime;
     }
 
-    public Long getTotalProcessingTime() {
+    public Double getTotalProcessingTime() {
         return totalProcessingTime;
     }
 
@@ -75,7 +75,7 @@ class TextResponse {
         private String freqWord;
         private Integer avgParagraphSize;
         private Double avgParagraphProcessingTime;
-        private Long totalProcessingTime;
+        private Double totalProcessingTime;
 
         public Builder from(TextResponse value) {
             freqWord = value.freqWord;
@@ -85,23 +85,23 @@ class TextResponse {
             return this;
         }
 
-        public Builder withFreqWord(String freqWord) {
-            this.freqWord = freqWord;
+        public Builder withFreqWord(String value) {
+            this.freqWord = value;
             return this;
         }
 
-        public Builder withAvgParagraphSize(Integer avgParagraphSize) {
-            this.avgParagraphSize = avgParagraphSize;
+        public Builder withAvgParagraphSize(Integer value) {
+            this.avgParagraphSize = value;
             return this;
         }
 
-        public Builder withAvgParagraphProcessingTime(Double avgParagraphProcessingTime) {
-            this.avgParagraphProcessingTime = avgParagraphProcessingTime;
+        public Builder withAvgParagraphProcessingTime(Double value) {
+            this.avgParagraphProcessingTime = value;
             return this;
         }
 
-        public Builder withTotalProcessingTime(Long totalProcessingTime) {
-            this.totalProcessingTime = totalProcessingTime;
+        public Builder withTotalProcessingTime(Double value) {
+            this.totalProcessingTime = value;
             return this;
         }
 

@@ -26,7 +26,7 @@ public class TextResponseIT {
     public void setUp() throws Exception {
         victim = new TextResponse.Builder()
                 .withFreqWord("foo")
-                .withTotalProcessingTime(1l)
+                .withTotalProcessingTime(0.1)
                 .withAvgParagraphProcessingTime(0.2)
                 .withAvgParagraphSize(1)
                 .build();

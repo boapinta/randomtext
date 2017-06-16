@@ -24,7 +24,7 @@ class RandomTextServiceDecorator implements RandomTextService {
 
                     return new TextResponse.Builder()
                             .from(textResponse)
-                            .withTotalProcessingTime(stopWatch.getTotalTimeMillis())
+                            .withTotalProcessingTime(stopWatch.getTotalTimeSeconds())
                             .build();
                 });
     }

@@ -1,7 +1,6 @@
 package com.github.randomtext.text;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -70,6 +69,7 @@ class RandomTextResponse {
                 '}';
     }
 
+    // omit unused attributes 'format', 'type', 'time'
     @JsonPOJOBuilder
     @JsonIgnoreProperties(ignoreUnknown = true)
     @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
@@ -79,23 +79,23 @@ class RandomTextResponse {
         private Integer numberMax;
         private String textOut;
 
-        public Builder withAmount(Integer amount) {
-            this.amount = amount;
+        public Builder withAmount(Integer value) {
+            this.amount = value;
             return this;
         }
 
-        public Builder withNumber(Integer number) {
-            this.number = number;
+        public Builder withNumber(Integer value) {
+            this.number = value;
             return this;
         }
 
-        public Builder withNumberMax(Integer numberMax) {
-            this.numberMax = numberMax;
+        public Builder withNumberMax(Integer value) {
+            this.numberMax = value;
             return this;
         }
 
-        public Builder withTextOut(String textOut) {
-            this.textOut = textOut;
+        public Builder withTextOut(String value) {
+            this.textOut = value;
             return this;
         }
 
