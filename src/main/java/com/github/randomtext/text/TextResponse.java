@@ -17,7 +17,7 @@ class TextResponse {
     private String freqWord;
     private Integer avgParagraphSize;
     private Double avgParagraphProcessingTime;
-    private Double totalProcessingTime;
+    private Long totalProcessingTime;
 
     private TextResponse(Builder builder) {
         freqWord = builder.freqWord;
@@ -38,7 +38,7 @@ class TextResponse {
         return avgParagraphProcessingTime;
     }
 
-    public Double getTotalProcessingTime() {
+    public Long getTotalProcessingTime() {
         return totalProcessingTime;
     }
 
@@ -75,7 +75,15 @@ class TextResponse {
         private String freqWord;
         private Integer avgParagraphSize;
         private Double avgParagraphProcessingTime;
-        private Double totalProcessingTime;
+        private Long totalProcessingTime;
+
+        public Builder from(TextResponse value) {
+            freqWord = value.freqWord;
+            avgParagraphSize = value.avgParagraphSize;
+            avgParagraphProcessingTime = value.avgParagraphProcessingTime;
+            totalProcessingTime = value.totalProcessingTime;
+            return this;
+        }
 
         public Builder withFreqWord(String freqWord) {
             this.freqWord = freqWord;
@@ -92,7 +100,7 @@ class TextResponse {
             return this;
         }
 
-        public Builder withTotalProcessingTime(Double totalProcessingTime) {
+        public Builder withTotalProcessingTime(Long totalProcessingTime) {
             this.totalProcessingTime = totalProcessingTime;
             return this;
         }

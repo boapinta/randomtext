@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
@@ -24,7 +25,7 @@ public class TextConfiguration {
 
 
     @Bean
-    public APIService randomTextService() {
+    public APIService apiService() {
         return new Retrofit.Builder()
                 .baseUrl(settings.getBaseUrl())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -34,7 +35,13 @@ public class TextConfiguration {
     }
 
     @Bean
-    public RandomTextService remoteService() {
-        return new DefaultRandomTextService(randomTextService());
+    public RandomTextService randomTextService() {
+        return new DefaultRandomTextService(apiService());
+    }
+
+    @Primary
+    @Bean
+    public RandomTextService randomTextServiceDecorator() {
+        return new RandomTextServiceDecorator(randomTextService());
     }
 }

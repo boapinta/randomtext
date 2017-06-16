@@ -2,13 +2,16 @@ package com.github.randomtext.text;
 
 import org.springframework.util.Assert;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
  */
 public class Section {
+
+    private static final Pattern PATTERN = Pattern.compile("[,!?.\\s]+");
 
     private final String body;
     private final int size;
@@ -40,7 +43,8 @@ public class Section {
                 '}';
     }
 
-    public List<String> words() {
-        return Arrays.asList(body.split("[,!?.\\s]+"));
+    public Map<String, Long> splitByWord() {
+        return PATTERN.splitAsStream(body)
+                .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
     }
 }
