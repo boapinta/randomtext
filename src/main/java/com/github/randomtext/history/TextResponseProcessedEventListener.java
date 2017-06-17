@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by alexey on 6/17/17.
  */
-public class TextResponseProcessedEventListener {
+class TextResponseProcessedEventListener {
 
     private final HistoryRepository repository;
 

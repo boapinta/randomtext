@@ -35,7 +35,6 @@ class DefaultRandomTextService implements RandomTextService {
                             .flatMap(c -> c.getSections().stream())
                             .collect(Collectors.toList());
 
-
                     TextResponse.Builder builder = new TextResponse.Builder()
                             .withAvgParagraphSize(averageParagraphSize(sections));
 
@@ -47,7 +46,7 @@ class DefaultRandomTextService implements RandomTextService {
     }
 
     private Optional<String> mostFrequentWord(List<Section> sections, AtomicLong counter) {
-        Map<String, Long> map = sections.parallelStream()
+        Map<String, Long> map = sections.stream()
                 .flatMap(c -> splitByWord(c, counter).entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingLong(Map.Entry::getValue)));
 
@@ -77,5 +76,4 @@ class DefaultRandomTextService implements RandomTextService {
                 .reduce((a, b) -> a + b)
                 .orElseThrow(IllegalArgumentException::new) / sections.size();
     }
-
 }

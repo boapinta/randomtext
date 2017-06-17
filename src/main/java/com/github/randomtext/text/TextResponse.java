@@ -105,7 +105,7 @@ public class TextResponse {
             return this;
         }
 
-        TextResponse build() {
+        public TextResponse build() {
             return new TextResponse(this);
         }
     }

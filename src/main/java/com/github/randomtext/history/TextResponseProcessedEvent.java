@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Created by alexey on 6/17/17.
  */
-public class TextResponseProcessedEvent {
+class TextResponseProcessedEvent {
 
     private String freqWord;
     private Integer avgParagraphSize;
@@ -61,7 +61,7 @@ public class TextResponseProcessedEvent {
                 '}';
     }
 
-    public static class Builder {
+    static class Builder {
         private String freqWord;
         private Integer avgParagraphSize;
         private Double avgParagraphProcessingTime;
