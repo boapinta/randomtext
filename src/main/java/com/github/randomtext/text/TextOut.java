@@ -17,7 +17,7 @@ public class TextOut {
     private final List<Section> sections;
 
     static TextOut create(String input) {
-        Assert.hasText(input, "A value must not be blank");
+        Assert.hasText(input, "this String argument must have text; it must not be null, empty, or blank");
 
         Matcher matcher = PATTERN.matcher(input);
 
@@ -27,9 +27,9 @@ public class TextOut {
             sections.add(Section.create(matcher.group(1)));
         }
 
-        Assert.notEmpty(sections, "A collection must not be empty: it must contain at least 1 element");
+        Assert.notEmpty(sections, "this collection must not be empty: it must contain at least 1 element");
 
-        return new TextOut(sections);  // todo check sections size must be larger than 0
+        return new TextOut(sections);
     }
 
     private TextOut(List<Section> sections) {

@@ -1,10 +1,8 @@
 package com.github.randomtext.text;
 
 import org.springframework.util.Assert;
-import org.springframework.util.StopWatch;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -18,7 +16,7 @@ public class Section {
     private final int size;
 
     static Section create(String value) {
-        Assert.notNull(value, "A value must not be null");
+        Assert.notNull(value, "this argument is required; it must not be null");
 
         return new Section(value, value.length());
     }
@@ -42,18 +40,6 @@ public class Section {
                 "body='" + body + '\'' +
                 ", size=" + size +
                 '}';
-    }
-
-    public Map<String, Long> splitByWord(AtomicLong counter) {
-        StopWatch stopWatch = new StopWatch();
-
-        stopWatch.start();
-        Map<String, Long> stringLongMap = splitByWord();
-        stopWatch.stop();
-
-        counter.addAndGet(stopWatch.getTotalTimeMillis());
-
-        return stringLongMap;
     }
 
     public Map<String, Long> splitByWord() {

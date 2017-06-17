@@ -19,9 +19,8 @@ public class EndpointSettings {
         return baseUrl;
     }
 
-    public EndpointSettings setBaseUrl(String baseUrl) {
+    public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
-        return this;
     }
 
 }

@@ -19,6 +19,7 @@ public class SectionTest {
     @Test
     public void shouldThrowException() throws Exception {
         thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("this argument is required; it must not be null");
 
         Section.create(null);
     }

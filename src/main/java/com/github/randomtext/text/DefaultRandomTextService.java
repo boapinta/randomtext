@@ -1,5 +1,6 @@
 package com.github.randomtext.text;
 
+import org.springframework.util.StopWatch;
 import rx.Observable;
 import rx.schedulers.Schedulers;
 
@@ -34,11 +35,11 @@ class DefaultRandomTextService implements RandomTextService {
                             .flatMap(c -> c.getSections().stream())
                             .collect(Collectors.toList());
 
-                    AtomicLong counter = new AtomicLong(0);
 
                     TextResponse.Builder builder = new TextResponse.Builder()
                             .withAvgParagraphSize(averageParagraphSize(sections));
 
+                    AtomicLong counter = new AtomicLong(0);
                     mostFrequentWord(sections, counter).ifPresent(builder::withFreqWord);
 
                     return builder.withAvgParagraphProcessingTime(counter.doubleValue() / 1000 / sections.size()).build();
@@ -47,7 +48,7 @@ class DefaultRandomTextService implements RandomTextService {
 
     private Optional<String> mostFrequentWord(List<Section> sections, AtomicLong counter) {
         Map<String, Long> map = sections.parallelStream()
-                .flatMap(c -> c.splitByWord(counter).entrySet().stream())
+                .flatMap(c -> splitByWord(c, counter).entrySet().stream())
                 .collect(Collectors.groupingBy(Map.Entry::getKey, Collectors.summingLong(Map.Entry::getValue)));
 
         return map
@@ -56,6 +57,18 @@ class DefaultRandomTextService implements RandomTextService {
                 .limit(1)
                 .map(Map.Entry::getKey)
                 .findFirst();
+    }
+
+    private Map<String, Long> splitByWord(Section section, AtomicLong counter) {
+        StopWatch stopWatch = new StopWatch();
+
+        stopWatch.start();
+        Map<String, Long> stringLongMap = section.splitByWord();
+        stopWatch.stop();
+
+        counter.addAndGet(stopWatch.getTotalTimeMillis());
+
+        return stringLongMap;
     }
 
     private int averageParagraphSize(List<Section> sections) {

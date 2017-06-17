@@ -20,13 +20,13 @@ import static org.mockito.Mockito.verify;
  * Created by Alexey Koptenkov on 16/06/2017.
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RandomTextServiceDecoratorTest {
+public class StopWatchRandomTextServiceTest {
 
     @Mock
     private RandomTextService randomTextService;
 
     @InjectMocks
-    private RandomTextServiceDecorator victim;
+    private StopWatchRandomTextService victim;
 
     private TextResponse textResponse;
 

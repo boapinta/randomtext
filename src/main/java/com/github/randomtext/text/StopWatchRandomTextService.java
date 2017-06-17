@@ -6,11 +6,11 @@ import rx.Observable;
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
  */
-class RandomTextServiceDecorator implements RandomTextService {
+class StopWatchRandomTextService implements RandomTextService {
 
     private final RandomTextService delegate;
 
-    RandomTextServiceDecorator(RandomTextService delegate) {
+    StopWatchRandomTextService(RandomTextService delegate) {
         this.delegate = delegate;
     }
 

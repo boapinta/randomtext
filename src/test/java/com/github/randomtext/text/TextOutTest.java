@@ -18,7 +18,7 @@ public class TextOutTest {
     @Test
     public void shouldThrowException__blank() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("A value must not be blank");
+        thrown.expectMessage("this String argument must have text; it must not be null, empty, or blank");
 
         TextOut.create(" ");
     }
@@ -26,7 +26,7 @@ public class TextOutTest {
     @Test
     public void shouldThrowException__invalid_format() throws Exception {
         thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("A collection must not be empty: it must contain at least 1 element");
+        thrown.expectMessage("this collection must not be empty: it must contain at least 1 element");
 
         TextOut.create("<b>Elephant hence sudden sensible reindeer much charming messy iguanodon reckless endearingly along trout</b>");
     }
