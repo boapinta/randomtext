@@ -1,4 +1,4 @@
-package com.github.randomtext.history;
+package com.github.randomtext.text.history;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.github.randomtext.history;
+package com.github.randomtext.text.history;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

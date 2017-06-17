@@ -1,4 +1,4 @@
-package com.github.randomtext.history;
+package com.github.randomtext.text.history;
 
 import org.springframework.data.repository.CrudRepository;
 

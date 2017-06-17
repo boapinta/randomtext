@@ -1,4 +1,4 @@
-package com.github.randomtext.history;
+package com.github.randomtext.text.history;
 
 import com.github.randomtext.text.RandomTextService;
 import com.github.randomtext.text.TextResponse;

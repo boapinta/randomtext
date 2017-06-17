@@ -1,4 +1,4 @@
-package com.github.randomtext.history;
+package com.github.randomtext.text.history;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
