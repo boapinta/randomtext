@@ -7,9 +7,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import rx.Observable;
-import rx.observers.TestSubscriber;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -38,17 +35,8 @@ public class DefaultRandomTextServiceTest {
 
     @Test
     public void shouldCompute() throws Exception {
-        TestSubscriber<TextResponse> testSubscriber = TestSubscriber.create();
+        TextResponse next = victim.compute(1, 2, 1, 25).toBlocking().single();
 
-        victim.compute(1, 2, 1, 25)
-                .subscribe(testSubscriber);
-
-        testSubscriber.assertNoErrors();
-
-        List<TextResponse> result = testSubscriber.getOnNextEvents();
-        assertThat(result).hasSize(1);
-
-        TextResponse next = result.iterator().next();
         assertThat(next.getFreqWord()).isEqualTo("Foo");
         assertThat(next.getAvgParagraphSize()).isEqualTo(("Foo.".length() + "Foo Bar.".length())/2);
         assertThat(next.getAvgParagraphProcessingTime()).isNotNull();
@@ -56,9 +44,7 @@ public class DefaultRandomTextServiceTest {
         assertThat(next.getTotalProcessingTime()).isNull();
 
         verify(service).getText(1, 1, 25);
-
     }
-
 
     private RandomTextResponse randomTextResponseFooBar() {
         return new RandomTextResponse.Builder()

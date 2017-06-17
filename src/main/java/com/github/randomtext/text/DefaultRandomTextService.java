@@ -1,5 +1,7 @@
 package com.github.randomtext.text;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
  * Created by alexey on 6/15/17.
  */
 class DefaultRandomTextService implements RandomTextService {
+    private static final Logger log = LoggerFactory.getLogger(DefaultRandomTextService.class);
 
     private final APIService service;
 
