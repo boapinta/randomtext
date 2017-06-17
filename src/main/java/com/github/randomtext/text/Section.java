@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
  */
-public class Section {
+class Section {
     private static final Pattern PATTERN = Pattern.compile("[,\\-!?/.()ˆ*@#$%'\\[\\]\"\\s]+");
 
     private final String body;

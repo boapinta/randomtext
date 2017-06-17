@@ -1,6 +1,4 @@
-package com.github.randomtext.text;
-
-import org.springframework.util.Assert;
+package com.github.randomtext.history;
 
 import java.util.Objects;
 
@@ -14,16 +12,11 @@ public class TextResponseProcessedEvent {
     private Double avgParagraphProcessingTime;
     private Double totalProcessingTime;
 
-    public static TextResponseProcessedEvent create(TextResponse value) {
-        Assert.notNull(value, "this argument is required; it must not be null");
-        return new TextResponseProcessedEvent(value.getFreqWord(),value.getAvgParagraphSize(), value.getAvgParagraphProcessingTime(), value.getTotalProcessingTime());
-    }
-
-    private TextResponseProcessedEvent(String freqWord, Integer avgParagraphSize, Double avgParagraphProcessingTime, Double totalProcessingTime) {
-        this.freqWord = freqWord;
-        this.avgParagraphSize = avgParagraphSize;
-        this.avgParagraphProcessingTime = avgParagraphProcessingTime;
-        this.totalProcessingTime = totalProcessingTime;
+    private TextResponseProcessedEvent(Builder builder) {
+        freqWord = builder.freqWord;
+        avgParagraphSize = builder.avgParagraphSize;
+        avgParagraphProcessingTime = builder.avgParagraphProcessingTime;
+        totalProcessingTime = builder.totalProcessingTime;
     }
 
     public String getFreqWord() {
@@ -66,5 +59,36 @@ public class TextResponseProcessedEvent {
                 ", avgParagraphProcessingTime=" + avgParagraphProcessingTime +
                 ", totalProcessingTime=" + totalProcessingTime +
                 '}';
+    }
+
+    public static class Builder {
+        private String freqWord;
+        private Integer avgParagraphSize;
+        private Double avgParagraphProcessingTime;
+        private Double totalProcessingTime;
+
+        public Builder freqWord(String value) {
+            this.freqWord = value;
+            return this;
+        }
+
+        public Builder avgParagraphSize(Integer value) {
+            this.avgParagraphSize = value;
+            return this;
+        }
+
+        public Builder avgParagraphProcessingTime(Double value) {
+            this.avgParagraphProcessingTime = value;
+            return this;
+        }
+
+        public Builder totalProcessingTime(Double value) {
+            this.totalProcessingTime = value;
+            return this;
+        }
+
+        public TextResponseProcessedEvent build() {
+            return new TextResponseProcessedEvent(this);
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Alexey Koptenkov on 16/06/2017.
  */
-public class TextOut {
+class TextOut {
     private static final Pattern PATTERN = Pattern.compile("<p>(.+?)<\\/p>(\\r)?");
 
     private final List<Section> sections;

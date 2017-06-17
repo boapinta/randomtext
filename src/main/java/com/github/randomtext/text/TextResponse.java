@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonDeserialize(builder = TextResponse.Builder.class)
-class TextResponse {
+public class TextResponse {
 
     private String freqWord;
     private Integer avgParagraphSize;
@@ -70,7 +70,7 @@ class TextResponse {
 
     @JsonPOJOBuilder
     @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-    static class Builder {
+    public static class Builder {
 
         private String freqWord;
         private Integer avgParagraphSize;

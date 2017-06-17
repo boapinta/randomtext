@@ -1,5 +1,8 @@
-package com.github.randomtext.text;
+package com.github.randomtext.history;
 
+import com.github.randomtext.history.ProcessedEventRandomTextService;
+import com.github.randomtext.history.TextResponseProcessedEvent;
+import com.github.randomtext.text.RandomTextService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
