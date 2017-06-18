@@ -3,6 +3,7 @@ package com.github.randomtext.text.history;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,9 +24,13 @@ public class History {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
+    @ApiModelProperty(value = "${History.freqWord}", required = true)
     private String freqWord;
+    @ApiModelProperty(value = "${History.avgParagraphSize}", required = true)
     private Integer avgParagraphSize;
+    @ApiModelProperty(value = "${History.avgParagraphProcessingTime}", required = true)
     private Double avgParagraphProcessingTime;
+    @ApiModelProperty(value = "${History.totalProcessingTime}", required = true)
     private Double totalProcessingTime;
     @JsonIgnore
     @Column(updatable = false, insertable = false)
