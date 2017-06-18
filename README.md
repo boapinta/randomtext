@@ -5,6 +5,7 @@ RandomText client (unofficial) grabs remote data from http://www.randomtext.me s
   - Async and multithreaded http client usage example 
   - Sync read async write to DB, motivated by [CQRS]
   - Feature based source code organization
+  - [API docs] is produced using [Swagger]
  
 
 ### Tech
@@ -18,6 +19,7 @@ RandomText client uses a number of open source projects to work properly:
 * [Liquibase] - source control for your database
 * [h2] - Database Engine
 * [Apache Maven] - is a software project management and comprehension tool
+* [Swagger] - is the world’s largest framework of API developer tools for the OpenAPI Specification
 
 ### Installation
 
@@ -45,7 +47,7 @@ $ mvn clean install
 
 ### Todos
 
- - Add Swagger support
+ - none
 
 License
 ----
@@ -65,4 +67,6 @@ Apache 2.0
    [h2]: <http://www.h2database.com/html/main.html>
    [Apache Maven]: <https://maven.apache.org/>
    [CQRS]: <https://martinfowler.com/bliki/CQRS.html>
+   [API docs]: <http://localhost:8080/swagger-ui.html>
+   [Swagger]: <http://swagger.io/>
 

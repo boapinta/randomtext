@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Created by alexey on 6/15/17.
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest
 public class RandomTextResponseIT {
 
     @Autowired
