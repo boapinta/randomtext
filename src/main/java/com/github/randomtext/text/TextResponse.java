@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Objects;
 
@@ -14,9 +15,13 @@ import java.util.Objects;
 @JsonDeserialize(builder = TextResponse.Builder.class)
 public class TextResponse {
 
+    @ApiModelProperty(value = "${TextResponse.freqWord}", required = true)
     private String freqWord;
+    @ApiModelProperty(value = "${TextResponse.avgParagraphSize}", required = true)
     private Integer avgParagraphSize;
+    @ApiModelProperty(value = "${TextResponse.avgParagraphProcessingTime}", required = true)
     private Double avgParagraphProcessingTime;
+    @ApiModelProperty(value = "${TextResponse.totalProcessingTime}", required = true)
     private Double totalProcessingTime;
 
     private TextResponse(Builder builder) {

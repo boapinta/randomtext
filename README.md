@@ -67,6 +67,6 @@ Apache 2.0
    [h2]: <http://www.h2database.com/html/main.html>
    [Apache Maven]: <https://maven.apache.org/>
    [CQRS]: <https://martinfowler.com/bliki/CQRS.html>
-   [API docs]: <http://localhost:8080/swagger-ui.html>
+   [API docs]: <http://localhost:8080>
    [Swagger]: <http://swagger.io/>
 

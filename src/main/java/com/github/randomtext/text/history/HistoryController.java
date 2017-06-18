@@ -1,5 +1,6 @@
 package com.github.randomtext.text.history;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class HistoryController {
         this.repository = repository;
     }
 
+    @ApiOperation(value = "Get last 10 history entries", response = History.class, responseContainer = "List")
     @GetMapping
     @Transactional(readOnly = true)
     public List<History> getLastTen() {
