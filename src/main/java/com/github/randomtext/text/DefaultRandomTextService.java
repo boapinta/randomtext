@@ -1,7 +1,5 @@
 package com.github.randomtext.text;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.StopWatch;
 import rx.Observable;
 import rx.schedulers.Schedulers;
@@ -17,8 +15,6 @@ import java.util.stream.Collectors;
  * Created by alexey on 6/15/17.
  */
 class DefaultRandomTextService implements RandomTextService {
-    private static final Logger log = LoggerFactory.getLogger(DefaultRandomTextService.class);
-
     private final APIService service;
 
     DefaultRandomTextService(APIService service) {
@@ -28,10 +24,10 @@ class DefaultRandomTextService implements RandomTextService {
     @Override
     public Observable<TextResponse> compute(int start, int end, int min, int max) {
         return Observable.range(start, end)
-                .flatMap(id -> Observable.just(id)
-                        .observeOn(Schedulers.computation())
-                        .flatMap(pid -> service.getText(pid, min, max)
-                                .map(value -> TextOut.create(value.getTextOut()))))
+                .flatMap(pid -> service.getText(pid, min, max)
+                        .subscribeOn(Schedulers.computation())
+                        .map(value -> TextOut.create(value.getTextOut()))
+                )
                 .toList()
                 .map(textOuts -> {
                     List<Section> sections = textOuts.stream()
